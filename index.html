@@ -1,0 +1,375 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>台灣移工媒合平台 | Find Work in Taiwan</title>
+    <meta
+      name="description"
+      content="台灣移工媒合平台，提供越南、印尼、馬來西亞勞工查詢台灣可選職缺，並串接合法仲介公司協助辦理相關手續。"
+    />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700;800&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <header class="site-header">
+      <div class="container nav">
+        <div class="brand">
+          <span class="brand-mark">TW</span>
+          <span>台灣移工媒合平台</span>
+        </div>
+        <nav class="main-nav">
+          <a href="#jobs">工作機會</a>
+          <a href="#agencies">仲介公司</a>
+          <a href="#process">申請流程</a>
+          <a href="#faq">FAQ</a>
+        </nav>
+        <a class="button button-primary" href="#jobs">立即查看</a>
+      </div>
+    </header>
+
+    <main>
+      <section class="hero">
+        <div class="container hero-grid">
+          <div class="hero-copy">
+            <p class="eyebrow">Trusted Taiwan Jobs & Visa Support</p>
+            <h1>找到適合的台灣工作，從選擇職缺到合法申請一步到位</h1>
+            <p class="lead">
+              針對越南、印尼、馬來西亞希望來台工作的勞工，整理熱門職缺資訊、薪資範圍與合法仲介公司，協助您了解台灣工作機會與申請流程。
+            </p>
+            <div class="actions">
+              <a class="button button-primary" href="#jobs">查看工作機會</a>
+              <a class="button button-secondary" href="#agencies">找仲介公司</a>
+            </div>
+            <div class="hero-stats">
+              <div>
+                <strong>12+</strong>
+                <span>熱門職種</span>
+              </div>
+              <div>
+                <strong>3</strong>
+                <span>主要國家</span>
+              </div>
+              <div>
+                <strong>24/7</strong>
+                <span>資訊查詢</span>
+              </div>
+            </div>
+          </div>
+          <div class="hero-panel">
+            <div class="panel-card">
+              <div class="panel-header">
+                <span class="dot dot-blue"></span>
+                <span>熱門職缺</span>
+              </div>
+              <ul class="mini-list">
+                <li><span>工廠作業</span><strong>月薪 32,000~45,000</strong></li>
+                <li><span>餐飲服務</span><strong>月薪 30,000~42,000</strong></li>
+                <li><span>物流倉儲</span><strong>月薪 33,000~48,000</strong></li>
+                <li><span>清潔人員</span><strong>月薪 28,000~38,000</strong></li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="country-strip">
+        <div class="container country-row">
+          <span>越南</span>
+          <span>印尼</span>
+          <span>馬來西亞</span>
+          <span>台灣仲介服務</span>
+          <span>合法申請流程</span>
+        </div>
+      </section>
+
+      <section class="info-grid container">
+        <article class="info-card">
+          <span class="icon">🏭</span>
+          <h3>製造業</h3>
+          <p>工廠與電子、食品、紡織、金屬加工產業職缺，適合適應力強且穩定工作者。</p>
+        </article>
+        <article class="info-card">
+          <span class="icon">🍽️</span>
+          <h3>餐飲/服務</h3>
+          <p>餐廳、連鎖餐飲與飯店服務相關職務，適合具有溝通與服務能力者。</p>
+        </article>
+        <article class="info-card">
+          <span class="icon">🚚</span>
+          <h3>物流倉儲</h3>
+          <p>包裝、出貨、盤點、搬運相關工作，通常適合體力穩定及分工明確的工時制度。</p>
+        </article>
+      </section>
+
+      <section id="jobs" class="jobs-section">
+        <div class="container">
+          <div class="section-heading">
+            <p class="eyebrow">工作機會</p>
+            <h2>依國家與職種選擇適合的工作</h2>
+          </div>
+
+          <div class="filters" aria-label="工作篩選器">
+            <button class="filter active" data-filter="all">全部</button>
+            <button class="filter" data-filter="越南">越南</button>
+            <button class="filter" data-filter="印尼">印尼</button>
+            <button class="filter" data-filter="馬來西亞">馬來西亞</button>
+            <button class="filter" data-filter="製造業">製造業</button>
+            <button class="filter" data-filter="餐飲業">餐飲業</button>
+            <button class="filter" data-filter="物流倉儲">物流倉儲</button>
+            <button class="filter" data-filter="清潔保全">清潔保全</button>
+          </div>
+
+          <div id="jobList" class="job-grid"></div>
+        </div>
+      </section>
+
+      <section id="agencies" class="agency-section">
+        <div class="container">
+          <div class="section-heading">
+            <p class="eyebrow">仲介公司</p>
+            <h2>合法仲介公司協助辦理相關手續</h2>
+          </div>
+
+          <div id="agencyList" class="agency-grid"></div>
+        </div>
+      </section>
+
+      <section id="process" class="process-section">
+        <div class="container">
+          <div class="section-heading">
+            <p class="eyebrow">申請流程</p>
+            <h2>從提交資料到入台工作，流程簡化</h2>
+          </div>
+
+          <div class="process-grid">
+            <div class="process-step">
+              <span class="step-number">01</span>
+              <h3>選擇職缺</h3>
+              <p>依照個人條件與工作偏好選擇適合之職種，確認薪資、工時與工作地點。</p>
+            </div>
+            <div class="process-step">
+              <span class="step-number">02</span>
+              <h3>備妥文件</h3>
+              <p>準備護照、學歷、健康證明、履歷及相關身份文件，供仲介公司評估。</p>
+            </div>
+            <div class="process-step">
+              <span class="step-number">03</span>
+              <h3>仲介協助</h3>
+              <p>由合法仲介公司協助簽訂合約、安排面試、辦理簽證與來台前準備事宜。</p>
+            </div>
+            <div class="process-step">
+              <span class="step-number">04</span>
+              <h3>抵台就業</h3>
+              <p>完成入境、安排住宿與訓練，確保到台後能順利適應工作環境與勞動權益。</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section id="faq" class="faq-section">
+        <div class="container faq-wrap">
+          <div class="section-heading left">
+            <p class="eyebrow">常見問題</p>
+            <h2>移工申請與工作前須了解的重點</h2>
+          </div>
+
+          <div class="faq-list">
+            <div class="faq-item">
+              <h3>申請臺灣工作需要哪些文件？</h3>
+              <p>通常包括護照、照片、健康證明、履歷、學歷證明與工作經驗證明，詳細可由仲介公司提供清單。</p>
+            </div>
+            <div class="faq-item">
+              <h3>有哪些工作是較常見的選擇？</h3>
+              <p>常見包括工廠、物流倉儲、餐飲服務、清潔保全與農業相關工作。依個人條件選擇最適合的類型。</p>
+            </div>
+            <div class="faq-item">
+              <h3>仲介公司是否可協助簽證？</h3>
+              <p>合法仲介公司可協助辦理申請相關流程與文件，協助改善資料準備與就業安排，建議確認其合法性與服務內容。</p>
+            </div>
+            <div class="faq-item">
+              <h3>工資與津貼有哪些注意事項？</h3>
+              <p>務必確認合約中薪資、工時、加班、住宿與保險條款，避免後續權益被忽略。</p>
+            </div>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <footer class="site-footer">
+      <div class="container footer-grid">
+        <div>
+          <div class="brand footer-brand">
+            <span class="brand-mark">TW</span>
+            <span>台灣移工媒合平台</span>
+          </div>
+          <p>協助越南、印尼、馬來西亞勞工了解台灣就業機會與合法申請資訊。</p>
+        </div>
+        <div>
+          <h4>快速連結</h4>
+          <ul>
+            <li><a href="#jobs">工作機會</a></li>
+            <li><a href="#agencies">仲介公司</a></li>
+            <li><a href="#process">申請流程</a></li>
+          </ul>
+        </div>
+        <div>
+          <h4>聯絡資訊</h4>
+          <ul>
+            <li>電子郵件：hello@taiwanmigrantjobs.tw</li>
+            <li>服務時間：週一至週六</li>
+            <li>支援語言：中文 / 英文 / 越南文</li>
+          </ul>
+        </div>
+      </div>
+    </footer>
+
+    <script src="script.js"></script>
+  </body>
+</html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
