@@ -1,9 +1,39 @@
+'use client';
+
+import { useEffect, useState } from 'react';
 import Link from 'next/link';
 import { SiteFooter } from '@/components/site-footer';
 import { SiteHeader } from '@/components/site-header';
-import { agencies, featuredJobs } from '@/data/site-data';
+import type { Job, Agency } from '@/lib/supabase';
 
 export default function HomePage() {
+  const [featuredJobs, setFeaturedJobs] = useState<Job[]>([]);
+  const [agencies, setAgencies] = useState<Agency[]>([]);
+  const [isLoading, setIsLoading] = useState(true);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      setIsLoading(true);
+      try {
+        const [jobsRes, agenciesRes] = await Promise.all([
+          fetch('/api/jobs'),
+          fetch('/api/agencies')
+        ]);
+        const jobsData = await jobsRes.json();
+        const agenciesData = await agenciesRes.json();
+        
+        setFeaturedJobs((jobsData.jobs || []).slice(0, 4));
+        setAgencies(agenciesData.agencies || []);
+      } catch (error) {
+        console.error('Failed to fetch data:', error);
+      } finally {
+        setIsLoading(false);
+      }
+    };
+
+    fetchData();
+  }, []);
+
   return (
     <>
       <SiteHeader />
@@ -50,12 +80,18 @@ export default function HomePage() {
                   <span>熱門職缺</span>
                 </div>
                 <ul className="mini-list">
-                  {featuredJobs.map((job) => (
-                    <li key={job.title}>
-                      <span>{job.title}</span>
-                      <strong>{job.salary}</strong>
-                    </li>
-                  ))}
+                  {isLoading ? (
+                    <li><span>載入中...</span></li>
+                  ) : featuredJobs.length === 0 ? (
+                    <li><span>目前沒有職缺</span></li>
+                  ) : (
+                    featuredJobs.map((job) => (
+                      <li key={job.id}>
+                        <span>{job.title}</span>
+                        <strong>NT$ {job.salary_min} ~ {job.salary_max}</strong>
+                      </li>
+                    ))
+                  )}
                 </ul>
               </div>
             </div>
@@ -99,29 +135,35 @@ export default function HomePage() {
               <h2>依國家與職種選擇適合的工作</h2>
             </div>
 
-            <div className="job-grid">
-              {featuredJobs.map((job) => (
-                <article key={job.title} className="job-card">
-                  <div className="card-top-row">
-                    <span className="country-badge">{job.country}</span>
-                    <span className="small-label">截止 {job.deadline}</span>
-                  </div>
-                  <h3>{job.title}</h3>
-                  <div className="pill-row">
-                    <span className="pill">{job.category}</span>
-                    <span className="pill">{job.location}</span>
-                  </div>
-                  <p>{job.description}</p>
-                  <div className="salary">{job.salary}</div>
-                  <div className="card-footer">
-                    <span className="pill">{job.shift}</span>
-                    <Link href="/agencies" className="button button-primary small-button">
-                      查看仲介
-                    </Link>
-                  </div>
-                </article>
-              ))}
-            </div>
+            {isLoading ? (
+              <div style={{ textAlign: 'center', padding: '40px 20px' }}>
+                <p>載入中...</p>
+              </div>
+            ) : (
+              <div className="job-grid">
+                {featuredJobs.map((job) => (
+                  <article key={job.id} className="job-card">
+                    <div className="card-top-row">
+                      <span className="country-badge">{job.country}</span>
+                      <span className="small-label">截止 {job.deadline || '未指定'}</span>
+                    </div>
+                    <h3>{job.title}</h3>
+                    <div className="pill-row">
+                      <span className="pill">{job.category}</span>
+                      <span className="pill">{job.location}</span>
+                    </div>
+                    <p>{job.description}</p>
+                    <div className="salary">NT$ {job.salary_min} ~ {job.salary_max}</div>
+                    <div className="card-footer">
+                      <span className="pill">{job.shift}</span>
+                      <Link href="/agencies" className="button button-primary small-button">
+                        查看仲介
+                      </Link>
+                    </div>
+                  </article>
+                ))}
+              </div>
+            )}
           </div>
         </section>
 
@@ -132,31 +174,37 @@ export default function HomePage() {
               <h2>合法仲介公司協助辦理相關手續</h2>
             </div>
 
-            <div className="agency-grid">
-              {agencies.map((agency) => (
-                <article key={agency.name} className="agency-card">
-                  <div className="card-top-row">
-                    <span className="country-badge">{agency.country}</span>
-                    <span className="small-label">認證服務</span>
-                  </div>
-                  <h3>{agency.name}</h3>
-                  <div className="pill-row">
-                    {agency.services.map((item) => (
-                      <span key={item} className="pill">
-                        {item}
-                      </span>
-                    ))}
-                  </div>
-                  <p>{agency.description}</p>
-                  <div className="card-footer">
-                    <span className="pill">資源充足</span>
-                    <Link href="/process" className="text-link">
-                      了解流程
-                    </Link>
-                  </div>
-                </article>
-              ))}
-            </div>
+            {isLoading ? (
+              <div style={{ textAlign: 'center', padding: '40px 20px' }}>
+                <p>載入中...</p>
+              </div>
+            ) : (
+              <div className="agency-grid">
+                {agencies.map((agency) => (
+                  <article key={agency.id} className="agency-card">
+                    <div className="card-top-row">
+                      <span className="country-badge">{agency.country}</span>
+                      <span className="small-label">認證服務</span>
+                    </div>
+                    <h3>{agency.name}</h3>
+                    <div className="pill-row">
+                      {agency.services.split(',').map((item) => (
+                        <span key={item.trim()} className="pill">
+                          {item.trim()}
+                        </span>
+                      ))}
+                    </div>
+                    <p>{agency.description}</p>
+                    <div className="card-footer">
+                      <span className="pill">資源充足</span>
+                      <Link href="/process" className="text-link">
+                        了解流程
+                      </Link>
+                    </div>
+                  </article>
+                ))}
+              </div>
+            )}
           </div>
         </section>
       </main>
